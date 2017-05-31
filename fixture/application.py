@@ -4,6 +4,8 @@ import pytest
 # import allure
 import pickle
 import logging
+from pages.ConverterPage import ConverterPage
+from pages.BasePage import BasePage
 
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
@@ -16,7 +18,7 @@ class Application:
         self.url = base_url
         self.driver.implicitly_wait(10)
         logging.info("initialized {}".format(self))
-        print('test started')
+        self.convertpage = ConverterPage(self)
 
     # Maximise window for tests
     def page_maximize(self):
@@ -53,5 +55,6 @@ class Application:
     # Destroy fixture. Close test window
     def destroy(self):
         # self.driver.save_screenshot('screenshot.png')
-        self.driver.quit()
+        # self.driver.quit()
+        pass
 
