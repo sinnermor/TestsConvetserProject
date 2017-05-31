@@ -1,0 +1,7 @@
+pytest==2.9.0
+selenium
+lxml-3.7.3.win-amd64-py3.4.exe
+pytest_allure_adaptor
+pytest-logging
+pytest-bdd
+PyVirtualDisplay
