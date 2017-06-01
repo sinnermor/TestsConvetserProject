@@ -1,4 +1,4 @@
-
+from selenium.common.exceptions import NoAlertPresentException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
@@ -8,29 +8,40 @@ from pages.BasePage import BasePage
 # import allure
 
 class ConverterLocators(object):
-    SUM_CONVERTATION_FIELS =(By.XPATH, "//div[contains(@class, 'rates-aside__filter-block-line-right')]/form/input")
-    FROM_CURRENCY_FIELD = (By.XPATH, "//div[contains(@class, 'rates-aside__filter-block-line-right')]/div")
-    FROM_CURRENCY_SELECTOR = (By.XPATH, "//select[contains(@name, 'converterFrom')]")
+    SUM_CONVERTATION_FIELS =(By.XPATH, '//div[contains(@class, "rates-aside__filter-block-line-right")]/form/input')
+    FROM_CURRENCY_FIELD = (By.XPATH, '//div[contains(@class, "rates-aside__filter-block-line-right")]/div')
+    FROM_CURRENCY_SELECTOR = (By.XPATH, '//select[contains(@name, "converterFrom")]')
     FROM_CURRENCY_FIELD_EUR = (By.XPATH, '//select[contains(@name, "converterFrom")]/following-sibling::div/div/span[text()="EUR"]')
 
-    SOURCE_CARD = (By.XPATH, "//input[@name='sourceCode' and @value='card']")
-    SOURCE_ACCOUNT = (By.XPATH, "//input[@name='sourceCode' and @value='account']")
-    SOURCE_CASH = (By.XPATH, "//input[@name='sourceCode' and @value='cash']")
+    LABEL_LIST_FROM_CONVERTATION = (By.XPATH, "")
 
-    DESTINATION_CARD = (By.XPATH, "//input[@name='destinationCode' and @value='card']")
-    DESTINATION_ACCOUNT = (By.XPATH, "//input[@name='destinationCode' and @value='account']")
-    DESTINATION_CASH = (By.XPATH, "//input[@name='destinationCode' and @value='cash']")
+    SOURCE_CASH = '//input[@name="sourceCode" and @value="cash"]'
+    SOURCE_CARD = '//input[@name="sourceCode" and @value="card"]'
+    SOURCE_ACCOUNT = '//input[@name="sourceCode" and @value="account"]'
 
-    EXCHANGE_IBANK = (By.XPATH, "//input[@name='exchangeType' and @value='ibank']")
-    EXCHANGE_OFFICE = (By.XPATH, "//input[@name='exchangeType' and @value='office']")
-    EXCHANGE_ATM = (By.XPATH, "//input[@name='exchangeType' and @value='atm']")
+    DESTINATION_CARD = '//input[@name="destinationCode" and @value="card"]'
+    DESTINATION_ACCOUNT = '//input[@name="destinationCode" and @value="account"]'
+    DESTINATION_CASH = '//input[@name="destinationCode" and @value="cash"]'
+
+
+    EXCHANGE_IBANK = '//input[@name="exchangeType" and @value="ibank"]'
+
+    EXCHANGE_OFFICE = '//input[@name="exchangeType" and @value="office"]'
+    EXCHANGE_ATM = '//input[@name="exchangeType" and @value="atm"]'
+
+
+    SHOW_BUTTON_CONVERTER = (By.XPATH, '//div[contains(@class, "rates-aside__filter-block")]/button[contains(@class, "rates-button")]')
+
 
 
 
 
 class ConverterPage(BasePage):
 
-    # def create_locator_for_input(self, name, value):
+
+    def create_locator_for_input(self, locator_string):
+        locator = locator_string + "/following-sibling::span"
+        return locator
 
 
     # @allure.step('Type value {1} in sum field')
@@ -46,13 +57,29 @@ class ConverterPage(BasePage):
         element = self.driver.find_element(*ConverterLocators.FROM_CURRENCY_FIELD)
         element.click()
         WebDriverWait(self.driver, 20).until(
-            EC.element_to_be_clickable(
+            EC.visibility_of_element_located(
                 (By.XPATH, '//select[contains(@name, "converterFrom")]/following-sibling::div/div')))
         selector = self.driver.find_element(*ConverterLocators.FROM_CURRENCY_FIELD_EUR)
         selector.click()
 
     def select_input_checkbox(self, locator):
+        element = self.driver.find_element_by_xpath(locator)
+        atr = element.get_attribute('checked')
+        if atr != None:
+            pass
+        else:
+            element_select = self.create_locator_for_input(locator)
+
+            elem = self.driver.find_element_by_xpath(element_select)
+            WebDriverWait(self.driver, 50).until(
+                EC.element_to_be_clickable(
+                    (By.XPATH, element_select)))
+            elem.click()
+
+
+
+
+    def click_show_button(self, locator):
         element = self.driver.find_element(*(locator))
         element.click()
-
 
