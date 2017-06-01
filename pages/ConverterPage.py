@@ -69,13 +69,34 @@ class ConverterPage(BasePage):
             pass
         else:
             element_select = self.create_locator_for_input(locator)
-
             elem = self.driver.find_element_by_xpath(element_select)
             WebDriverWait(self.driver, 50).until(
                 EC.element_to_be_clickable(
                     (By.XPATH, element_select)))
             elem.click()
 
+    def select_source(self, param):
+        if param == 'account':
+            self.select_input_checkbox(ConverterLocators.SOURCE_ACCOUNT)
+        elif param == 'cash':
+            self.select_input_checkbox(ConverterLocators.SOURCE_CASH)
+        else: self.select_input_checkbox(ConverterLocators.SOURCE_CARD)
+
+    def select_destination(self, param):
+        if param == 'account':
+            self.select_input_checkbox(ConverterLocators.DESTINATION_ACCOUNT)
+        elif param == 'cash':
+            self.select_input_checkbox(ConverterLocators.DESTINATION_CASH)
+        else:
+            self.select_input_checkbox(ConverterLocators.DESTINATION_CARD)
+
+    def select_exchange(self, param):
+        if param == 'ibank':
+            self.select_input_checkbox(ConverterLocators.EXCHANGE_IBANK)
+        elif param == 'office':
+            self.select_input_checkbox(ConverterLocators.EXCHANGE_OFFICE)
+        else:
+            self.select_input_checkbox(ConverterLocators.EXCHANGE_ATM)
 
 
 

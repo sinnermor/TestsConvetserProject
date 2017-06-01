@@ -48,9 +48,9 @@ class Application:
 
 
 
-
-    def test_fin(self):
-        self.request()
+    #
+    # def test_fin(self):
+    #     self.request()
 
     # Destroy fixture. Close test window
     def destroy(self):

@@ -2,6 +2,7 @@ from pyvirtualdisplay import Display
 import pytest
 import json
 import os
+import csv
 import importlib
 from fixture.application import Application
 from selenium.webdriver.chrome.webdriver import WebDriver
@@ -49,11 +50,11 @@ def pytest_addoption(parser):
 def pytest_generate_tests(metafunc):
     for fixture in metafunc.fixturenames:
         if fixture.startswith("data_"):
-            testdate = load_from_module(fixture[5:])
+            testdate = load_from_module(fixture[1:])
             metafunc.parametrize(fixture, testdate, ids=[str(x) for x in testdate])
-        elif fixture.startswith("csv_"):
-            testdate = load_from_csv(fixture[5:])
-            metafunc.parametrize(fixture, testdate, ids=[str(x) for x in testdate])
+        elif fixture.startswith('csv_'):
+            testdate = load_from_csv(fixture[4:])
+            metafunc.parametrize(fixture, testdate)
 
 
 def load_from_module(module):
@@ -61,5 +62,9 @@ def load_from_module(module):
 
 
 def load_from_csv(file):
-    with open(os.path.join(os.path.dirname((__file__)), "data/%s.csv" % file))as f:
-        return f.read()
+    with open(os.path.join((os.path.dirname((__file__))), 'data\%s.csv' % file), newline='') as csvfile:
+        csv_data = csv.DictReader(csvfile)
+        data = dict.fromkeys(['source', 'destination', 'exchange'])
+        for row in csv_data:
+           data = row
+        return data
