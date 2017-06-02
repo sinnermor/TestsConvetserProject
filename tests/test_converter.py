@@ -6,9 +6,10 @@ from pages.ConverterPage import ConverterLocators
 
 
 def test_convert_money(app, csv_param):
-    source = dict.get(csv_param.source)
-    destination = csv_param.destination
-    exchange = csv_param.exchange
+
+    source = csv_param['source']
+    destination = csv_param['destination']
+    exchange = csv_param['exchange']
     app.open_home_page()
     app.page_maximize()
     app.convertpage.type_sum_convertation('300')

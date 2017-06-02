@@ -70,7 +70,7 @@ class ConverterPage(BasePage):
         else:
             element_select = self.create_locator_for_input(locator)
             elem = self.driver.find_element_by_xpath(element_select)
-            WebDriverWait(self.driver, 50).until(
+            WebDriverWait(self.driver, 60).until(
                 EC.element_to_be_clickable(
                     (By.XPATH, element_select)))
             elem.click()

@@ -54,7 +54,7 @@ def pytest_generate_tests(metafunc):
             metafunc.parametrize(fixture, testdate, ids=[str(x) for x in testdate])
         elif fixture.startswith('csv_'):
             testdate = load_from_csv(fixture[4:])
-            metafunc.parametrize(fixture, testdate)
+            metafunc.parametrize(fixture, testdate, ids=[str(x) for x in testdate])
 
 
 def load_from_module(module):
@@ -64,7 +64,7 @@ def load_from_module(module):
 def load_from_csv(file):
     with open(os.path.join((os.path.dirname((__file__))), 'data\%s.csv' % file), newline='') as csvfile:
         csv_data = csv.DictReader(csvfile)
-        data = dict.fromkeys(['source', 'destination', 'exchange'])
+        data = []
         for row in csv_data:
-           data = row
+            data.append(row)
         return data
