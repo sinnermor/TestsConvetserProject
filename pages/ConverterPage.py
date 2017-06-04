@@ -19,32 +19,20 @@ class ConverterLocators(object):
     FROM_CURRENCY_CURRENT = (By.XPATH, '//select[@name="converterFrom"]/following-sibling::div/header/strong')
     TO_CURRENCY_CURRENT = (By.XPATH, '//select[@name="converterTo"]/following-sibling::div/header/strong')
     HEADER_TITLE = (By.XPATH, '//h1')
-
     LABEL_LIST_FROM_CONVERTATION = (By.XPATH, "")
-
     SOURCE_CASH = '//input[@name="sourceCode" and @value="cash"]'
     SOURCE_CARD = '//input[@name="sourceCode" and @value="card"]'
     SOURCE_ACCOUNT = '//input[@name="sourceCode" and @value="account"]'
-
     DESTINATION_CARD = '//input[@name="destinationCode" and @value="card"]'
     DESTINATION_ACCOUNT = '//input[@name="destinationCode" and @value="account"]'
     DESTINATION_CASH = '//input[@name="destinationCode" and @value="cash"]'
-
-
     EXCHANGE_IBANK = '//input[@name="exchangeType" and @value="ibank"]'
-
     EXCHANGE_OFFICE = '//input[@name="exchangeType" and @value="office"]'
     EXCHANGE_ATM = '//input[@name="exchangeType" and @value="atm"]'
-
-
     SHOW_BUTTON_CONVERTER = (By.XPATH, '//div[contains(@class, "rates-aside__filter-block")]/button[contains(@class, "rates-button")]')
-
     SELL_BUY_VALUE = (By.XPATH, '//td[contains(@class, "rates-current__table-cell_column_buy")]/span/span[contains(@class, "rates-current__rate-value")]')
     SELL_SELL_VALUE =(By.XPATH, '//td[contains(@class, "rates-current__table-cell_column_sell")]/span/span[contains(@class, "rates-current__rate-value")]')
-
     TOTAL_SUM = (By.XPATH, '//span[contains(@class, "rates-converter-result__total-to")]')
-
-#     Locators for ui
     TEXT_BLOXK_HEADER = (By.XPATH, '//div[contains(@class, "rates-current__note")]')
     INPUT_PARENT = (By.XPATH, '//input[@name="exchangeType" and @value="ibank"]/parent::label')
 
