@@ -27,7 +27,7 @@ class Application:
         WebDriverWait(self.driver, 20).until(lambda d: d.execute_script('return document.readyState') == 'complete')
 
     # Open page with base url
-    #@allure.step('Открыть главную страницу')
+    #@allure.step('Open main page')
     def open_home_page(self):
             self.driver.get(self.url)
             WebDriverWait(self.driver, 20).until(lambda d: d.execute_script('return document.readyState') == 'complete')
@@ -46,15 +46,9 @@ class Application:
         except:
             return False
 
-
-
-    #
-    # def test_fin(self):
-    #     self.request()
-
     # Destroy fixture. Close test window
     def destroy(self):
-        # self.driver.save_screenshot('screenshot.png')
-        # self.driver.quit()
-        pass
+        self.driver.save_screenshot('screenshot.png')
+        self.driver.quit()
+        # pass
 
