@@ -1,0 +1,3 @@
+money_from,money_to,source,destination,exchange
+RUB,EUR,account,account,office
+RUB,USD,account,account,ibank

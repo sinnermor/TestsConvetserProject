@@ -7,9 +7,7 @@ import importlib
 from fixture.application import Application
 from selenium.webdriver.chrome.webdriver import WebDriver
 import logging
-
-
-# import allure
+import allure
 
 
 @pytest.mark.tryfirst
@@ -23,20 +21,20 @@ def pytest_runtest_makereport(item, call, __multicall__):
 def app(request):
     global fixture
     global target
-    # display = Display(visible=0, size=(800, 800))
-    # display.start()
+    display = Display(visible=0, size=(800, 800))
+    display.start()
     config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), request.config.getoption("--target"))
     with open(config_file, 'r') as f:
         target = json.load(f)
         fixture = Application(base_url=target['baseUrl'], driver=WebDriver())
 
     def fin():
-        # attach = fixture.driver.get_screenshot_as_png()
-        # if request.node.rep_setup.failed:
-        #     allure.attach(request.function.__name__, attach, allure.attach_type.PNG)
-        # elif request.node.rep_setup.passed:
-        #     if request.node.rep_call.failed:
-        #         allure.attach(request.function.__name__, attach, allure.attach_type.PNG)
+        attach = fixture.driver.get_screenshot_as_png()
+        if request.node.rep_setup.failed:
+            allure.attach(request.function.__name__, attach, allure.attach_type.PNG)
+        elif request.node.rep_setup.passed:
+            if request.node.rep_call.failed:
+                allure.attach(request.function.__name__, attach, allure.attach_type.PNG)
         fixture.destroy()
 
     request.addfinalizer(fin)
