@@ -21,13 +21,13 @@ class Application:
         self.convertpage = ConverterPage(self)
 
     # Maximise window for tests
+    @allure.step('Maximize window')
     def page_maximize(self):
-
         self.driver.maximize_window()
         WebDriverWait(self.driver, 20).until(lambda d: d.execute_script('return document.readyState') == 'complete')
 
     # Open page with base url
-    #@allure.step('Open main page')
+    @allure.step('Open main page')
     def open_home_page(self):
             self.driver.get(self.url)
             WebDriverWait(self.driver, 20).until(lambda d: d.execute_script('return document.readyState') == 'complete')
