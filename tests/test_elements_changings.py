@@ -1,5 +1,6 @@
-import pytest
 import allure
+import pytest
+from pages.ConverterPage import ConverterLocators
 
 @allure.story('Check element ibank is inactive when selected card and cash')
 def test_ibank_inactive(app):

@@ -18,6 +18,7 @@ def test_convert_money_from_rub(app, csv_param):
     app.convertpage.select_destination(csv_param['destination'])
     app.convertpage.select_exchange(csv_param['exchange'])
     app.convertpage.click_show_button(ConverterLocators.SHOW_BUTTON_CONVERTER)
-    assert app.convertpage.calculated_sum(1000) == app.convertpage.get_total_sum(), "Sums calculated and given are different"
+    with pytest.allure.step('Assert sum results'):
+        assert app.convertpage.calculated_sum(1000) == app.convertpage.get_total_sum(), "Sums calculated and given are different"
 
 
