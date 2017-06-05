@@ -274,7 +274,7 @@ class ConverterPage(BasePage):
         # Here we should use global variable for Path to root dir
         with open(
                 os.path.join(os.path.dirname(__file__)[:-5],
-                             "data\header_text.txt"),
+                             "data/header_text.txt"),
                 'r', encoding='utf-8') \
                 as f:
             expected_text = ''.join(f.readlines())
