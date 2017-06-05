@@ -114,6 +114,7 @@ class ConverterPage(BasePage):
             selector = self.driver.find_element_by_xpath(money_locator)
             selector.click()
 
+
     def select_input_checkbox(self, locator):
         element = self.driver.find_element_by_xpath(locator)
         atr = element.get_attribute('checked')
@@ -126,6 +127,7 @@ class ConverterPage(BasePage):
                 EC.element_to_be_clickable(
                     (By.XPATH, element_select)))
             elem.click()
+
 
     @allure.step('Select source - {1}')
     def select_source(self, param):
@@ -167,7 +169,7 @@ class ConverterPage(BasePage):
         element = self.driver.find_element(*ConverterLocators.TEXT_BLOXK_HEADER)
         return element.text
 
-    # @allure.step('Click show results button')
+    @allure.step('Click show results button')
     def click_show_button(self, locator):
         element = self.driver.find_element(*(locator))
         element.click()

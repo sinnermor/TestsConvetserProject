@@ -1,6 +1,6 @@
 pytest==2.9.0
 selenium
-lxml-3.7.3-cp34-cp34m-win_amd64.whl
+lxml-3.7.3-cp34-cp34m-manylinux1_x86_64.whl
 pytest_allure_adaptor
 pytest-logging
 pytest-bdd
