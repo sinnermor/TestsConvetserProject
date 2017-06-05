@@ -47,7 +47,7 @@ def pytest_addoption(parser):
 
 def pytest_generate_tests(metafunc):
     for fixture in metafunc.fixturenames:
-        if fixture.startswith("data_"):
+        if fixture.startswith('data_'):
             testdate = load_from_module(fixture[1:])
             metafunc.parametrize(fixture, testdate, ids=[str(x) for x in testdate])
         elif fixture.startswith('csv_'):
@@ -56,11 +56,11 @@ def pytest_generate_tests(metafunc):
 
 
 def load_from_module(module):
-    return importlib.import_module("data.%s" % module).testdate
+    return importlib.import_module('data.%s' % module).testdate
 
 
 def load_from_csv(file):
-    with open(os.path.join((os.path.dirname((__file__))), 'data\%s.csv' % file), newline='') as csvfile:
+    with open(os.path.join((os.path.dirname((__file__))), 'data/%s.csv' % file), newline='') as csvfile:
         csv_data = csv.DictReader(csvfile)
         data = []
         for row in csv_data:
