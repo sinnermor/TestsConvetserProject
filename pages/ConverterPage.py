@@ -83,10 +83,15 @@ class ConverterPage(BasePage):
     @staticmethod
     def create_locator_for_money(money, param):
         if param == 'From':
-            locator = ConverterLocators.MONEY_STRING_FROM + money + '''"]'''
+            locator = '//select[contains(@name, "converterFrom")]/' \
+                      'following-sibling::div/div/span' \
+                      '[text()={zn}{test}{zn}]'
+
         else:
-            locator = ConverterLocators.MONEY_STRING_TO + money + '''"]'''
-        return locator
+            locator = '//select[contains(@name, "converterTo")]/' \
+                      'following-sibling::div/div/span' \
+                      '[text()={zn}{test}{zn}]'
+        return locator.format(test=money, zn='"')
 
     @allure.step('Get page header title')
     def get_page_header_title(self):
@@ -163,9 +168,9 @@ class ConverterPage(BasePage):
                         WebDriverWait(self.driver, 120).until(
                             EC.element_to_be_clickable(
                                 (By.XPATH, money_locator)))
-                        selector = self.driver.find_element_by_xpath(
+                        curency_elem = self.driver.find_element_by_xpath(
                             money_locator)
-                        selector.click()
+                        curency_elem.click()
                         with pytest.allure.step(
                                 'Check value selected is correct'):
                             fin_element = self.driver.find_element_by_xpath(
@@ -188,9 +193,9 @@ class ConverterPage(BasePage):
                             WebDriverWait(self.driver, 120).until(
                                 EC.element_to_be_clickable(
                                     (By.XPATH, money_locator)))
-                            selector = self.driver.find_element_by_xpath(
+                            curency_elem = self.driver.find_element_by_xpath(
                                 money_locator)
-                            selector.click()
+                            curency_elem.click()
                             with pytest.allure.step(
                                     'Check value selected is correct'):
                                 fin_element =\
