@@ -18,7 +18,7 @@ def pytest_runtest_makereport(item, __multicall__):
 
 
 @pytest.fixture(scope="function")
-def app(request):
+def fixture(request):
     display = Display(visible=0, size=(800, 800))
     display.start()
     config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), request.config.getoption("--target"))
