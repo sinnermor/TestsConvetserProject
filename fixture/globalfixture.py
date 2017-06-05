@@ -5,8 +5,9 @@ from pages.ConverterPage import ConverterPage
 import allure
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
+
 # Fixture base class
-class Application:
+class GlobalFixture:
 
     # Fixture construstor, create Driver and declare all pages for tests
     def __init__(self, base_url, driver):
@@ -28,23 +29,14 @@ class Application:
             self.driver.get(self.url)
             WebDriverWait(self.driver, 20).until(lambda d: d.execute_script('return document.readyState') == 'complete')
 
-
     # Open any page with url - parametrized
     @allure.step('Open page URL {1}')
     def open_page(self, string):
         self.driver.get(self.url + string)
         WebDriverWait(self.driver, 20).until(lambda d: d.execute_script('return document.readyState') == 'complete')
 
-    def is_valid(self):
-        try:
-            self.driver.current_url()
-            return True
-        except:
-            return False
-
     # Destroy fixture. Close test window
     def destroy(self):
-        self.driver.save_screenshot('screenshot.png')
         self.driver.quit()
 
 
