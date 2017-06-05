@@ -1,8 +1,5 @@
 from selenium.webdriver.support.ui import WebDriverWait
 import sys
-import pytest
-# import allure
-import pickle
 import logging
 from pages.ConverterPage import ConverterPage
 import allure
@@ -33,7 +30,7 @@ class Application:
 
 
     # Open any page with url - parametrized
-    #@allure.step('Open page URL {1}')
+    @allure.step('Open page URL {1}')
     def open_page(self, string):
         self.driver.get(self.url + string)
         WebDriverWait(self.driver, 20).until(lambda d: d.execute_script('return document.readyState') == 'complete')
@@ -49,5 +46,5 @@ class Application:
     def destroy(self):
         self.driver.save_screenshot('screenshot.png')
         self.driver.quit()
-        # pass
+
 
