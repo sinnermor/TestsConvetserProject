@@ -16,7 +16,7 @@ def test_interface(app):
     app.open_home_page()
     app.page_maximize()
     assert app.convertpage.check_text_header_block(text_for_ini) == text_for_ini, 'Header info is not match with excpected'
-    assert app.convertpage.get_page_header_title() == header_title, "Header is wrong."
+    assert app.convertpage.get_page_header_title == header_title, "Header is wrong."
 
 
 @allure.story('Check element ibank is inactive when selected card and cash')
