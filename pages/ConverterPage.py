@@ -1,3 +1,4 @@
+import os
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
@@ -265,3 +266,16 @@ class ConverterPage(BasePage):
     def click_show_button(self, locator):
         element = self.driver.find_element(*locator)
         element.click()
+
+    def assert_page_info_text(self):
+        element = self.driver.find_element(
+            *ConverterLocators.TEXT_BLOXK_HEADER)
+        real_text = element.text
+        # Here we should use global variable for Path to root dir
+        with open(
+                os.path.join(os.path.dirname(__file__)[:-5],
+                             "data\header_text.txt"),
+                'r', encoding='utf-8') \
+                as f:
+            expected_text = ''.join(f.readlines())
+        assert real_text == expected_text, "Texts are different"

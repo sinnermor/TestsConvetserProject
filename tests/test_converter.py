@@ -28,4 +28,4 @@ def test_convert_money_from_rub(glob_fixture, csv_param):
         ConverterLocators.SHOW_BUTTON_CONVERTER)
     with pytest.allure.step('Assert sum results'):
         assert glob_fixture.convertpage.calculated_sum(1000) == \
-               glob_fixture.convertpage.get_total_sum(), 'Sums calculated and given are different'
+               glob_fixture.convertpage.get_total_sum(), 'Sums different'
