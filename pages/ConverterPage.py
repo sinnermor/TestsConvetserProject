@@ -6,6 +6,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pages.BasePage import BasePage
 import allure
+import pytest
 
 class ConverterLocators(object):
     SUM_CONVERTATION_FIELS =(By.XPATH, '//div[contains(@class, "rates-aside__filter-block-line-right")]/form/input')
@@ -76,8 +77,17 @@ class ConverterPage(BasePage):
     @allure.step('Clear and type value {1} in sum field')
     def type_sum_convertation(self, param):
         element = self.driver.find_element(*ConverterLocators.SUM_CONVERTATION_FIELS)
+        WebDriverWait(self.driver, 100).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, '//div[contains(@class, "rates-aside__filter-block-line-right")]/form/input')))
         element.clear()
+        with pytest.allure.step('Check sum fiels id empty'):
+            assert not element.text, 'Field is not empty'
         element.send_keys(param, Keys.ENTER)
+        with pytest.allure.step('Check sum fiels id has value={1}' ):
+            element_fin = self.driver.find_element(*ConverterLocators.SUM_CONVERTATION_FIELS)
+            text = element_fin.get_attribute('value').replace(' ','')
+            assert text == param, 'Sum is not the same with typed'
 
 
     @allure.step('Check currency value {1} matched with test param{2}')
@@ -89,30 +99,46 @@ class ConverterPage(BasePage):
             return True
         else: return False
 
+    # Function can be optimized
     @allure.step('Select currency - {1}')
     def choose_from_currency_value(self, value, param):
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        if self.check_currency_selected(value, param):
-            pass
-        else:
-            if param == 'From':
-                WebDriverWait(self.driver, 100).until(
-                    EC.element_to_be_clickable(
-                        (By.XPATH, ConverterLocators.FROM_CURRENCY_SELECTOR)))
-                element = self.driver.find_element_by_xpath(ConverterLocators.FROM_CURRENCY_SELECTOR)
-                element.click()
-            else :
-                WebDriverWait(self.driver, 100).until(
-                    EC.element_to_be_clickable(
-                        (By.XPATH, ConverterLocators.TO_CURRENCY_SELECTOR)))
-                element = self.driver.find_element_by_xpath(ConverterLocators.TO_CURRENCY_SELECTOR)
-                element.click()
-            money_locator = self.create_locator_for_money(value, param)
-            WebDriverWait(self.driver, 120).until(
-                EC.element_to_be_clickable(
-                    (By.XPATH, money_locator)))
-            selector = self.driver.find_element_by_xpath(money_locator)
-            selector.click()
+        with pytest.allure.step('Check that value of test is not selected'):
+            if self.check_currency_selected(value, param):
+                pass
+            else:
+                with pytest.allure.step('Select converted "from" value'):
+                    if param == 'From':
+                        WebDriverWait(self.driver, 100).until(
+                            EC.element_to_be_clickable(
+                                (By.XPATH, ConverterLocators.FROM_CURRENCY_SELECTOR)))
+                        element = self.driver.find_element_by_xpath(ConverterLocators.FROM_CURRENCY_SELECTOR)
+                        element.click()
+                        money_locator = self.create_locator_for_money(value, param)
+                        WebDriverWait(self.driver, 120).until(
+                            EC.element_to_be_clickable(
+                                (By.XPATH, money_locator)))
+                        selector = self.driver.find_element_by_xpath(money_locator)
+                        selector.click()
+                        with pytest.allure.step('Check value selected is correct'):
+                            fin_element = self.driver.find_element_by_xpath(ConverterLocators.FROM_CURRENCY_SELECTOR)
+                            assert fin_element.text == param, 'Value selected incorrect'
+                    else :
+                        with pytest.allure.step('Select converted "to" value'):                    
+                            WebDriverWait(self.driver, 100).until(
+                                EC.element_to_be_clickable(
+                                    (By.XPATH, ConverterLocators.TO_CURRENCY_SELECTOR)))
+                            element = self.driver.find_element_by_xpath(ConverterLocators.TO_CURRENCY_SELECTOR)
+                            element.click()
+                            money_locator = self.create_locator_for_money(value, param)
+                            WebDriverWait(self.driver, 120).until(
+                                EC.element_to_be_clickable(
+                                    (By.XPATH, money_locator)))
+                            selector = self.driver.find_element_by_xpath(money_locator)
+                            selector.click()
+                            with pytest.allure.step('Check value selected is correct'):
+                                fin_element = self.driver.find_element_by_xpath(ConverterLocators.TO_CURRENCY_SELECTOR)
+                                assert fin_element.text == value, 'Value selected incorrect'
 
 
     def select_input_checkbox(self, locator):
@@ -127,6 +153,7 @@ class ConverterPage(BasePage):
                 EC.element_to_be_clickable(
                     (By.XPATH, element_select)))
             elem.click()
+
 
     @allure.step('Select source - {1}')
     def select_source(self, param):
