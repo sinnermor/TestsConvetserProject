@@ -55,7 +55,7 @@ class ConverterPage(BasePage):
 
     @allure.step('Get page headet title')
     def get_page_header_title(self):
-        element = self.driver.find_element(ConverterLocators.HEADER_TITLE)
+        element = self.driver.find_element(*ConverterLocators.HEADER_TITLE)
         return element.text
 
     @allure.step('Caclulate sum exchanged currency')
@@ -127,7 +127,6 @@ class ConverterPage(BasePage):
                 EC.element_to_be_clickable(
                     (By.XPATH, element_select)))
             elem.click()
-
 
     @allure.step('Select source - {1}')
     def select_source(self, param):

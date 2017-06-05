@@ -7,7 +7,7 @@ text_for_ini = '''Курсы иностранных валют относятс�
 
 header_title = 'Калькулятор иностранных валют'
 
-@allure.feature('Check title and text information about currency changings')
+# @allure.feature('Check title and text information about currency changings')
 def test_interface(app):
     app.open_home_page()
     app.page_maximize()
