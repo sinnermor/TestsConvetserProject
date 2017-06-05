@@ -1,8 +1,4 @@
-from selenium.webdriver.support import expected_conditions as EC, wait, ui
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.common.by import By
 import pytest
-from pages.ConverterPage import ConverterLocators
 import allure
 
 text_for_ini = '''Курсы иностранных валют относятся только к физическим лицам.
@@ -15,25 +11,10 @@ header_title = 'Калькулятор иностранных валют'
 def test_interface(app):
     app.open_home_page()
     app.page_maximize()
-    assert app.convertpage.check_text_header_block(text_for_ini) == text_for_ini, 'Header info is not match with excpected'
-    assert app.convertpage.get_page_header_title == header_title, "Header is wrong."
+    with pytest.allure.step('Assert test block'):
+        assert app.convertpage.check_text_header_block(text_for_ini) == text_for_ini, 'Header info is not match with excpected'
+    with pytest.allure.step('Assert header is the same as expected'):
+        assert app.convertpage.get_page_header_title() == header_title, "Header is wrong."
 
-
-@allure.story('Check element ibank is inactive when selected card and cash')
-def test_ibank_inactive(app):
-    app.open_home_page()
-    app.page_maximize()
-    app.convertpage.select_source("card")
-    app.convertpage.select_destination("cash")
-    assert not app.convertpage.get_check_status_element(ConverterLocators.EXCHANGE_IBANK), "Element should be inactive"
-
-@allure.story('Check that ibank and atm is disabled when cash - cash is selected')
-def test_account_cash_inactive_elements(app):
-    app.open_home_page()
-    app.page_maximize()
-    app.convertpage.select_source("account")
-    app.convertpage.select_destination("cash")
-    assert not app.convertpage.get_check_status_element(ConverterLocators.EXCHANGE_IBANK), "Element should be inactive "
-    assert not app.convertpage.get_check_status_element(ConverterLocators.EXCHANGE_ATM), "Element should be inactive "
 
 
