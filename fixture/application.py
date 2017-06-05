@@ -5,8 +5,7 @@ import pytest
 import pickle
 import logging
 from pages.ConverterPage import ConverterPage
-from pages.BasePage import BasePage
-
+import allure
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
 # Fixture base class
